@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14.2-alpine
+    container_name: db_mine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db_mine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./files/sql:/docker-entrypoint-initdb.d
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis_mine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./files/data:/data
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local
